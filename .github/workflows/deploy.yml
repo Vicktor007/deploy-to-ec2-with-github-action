@@ -1,4 +1,4 @@
-name: Deploy to EC2 with GitHub Actions
+name: Deploy to EC2 with GitHub Actions12
 
 on:
   push:
