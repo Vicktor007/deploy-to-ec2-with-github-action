@@ -58,6 +58,11 @@ jobs:
               echo "Unsupported package manager. Please install Docker manually."
               exit 1
             fi
+            # Add the user to the docker group
+            sudo usermod -aG docker $USER
+            # Restart the Docker service
+            sudo systemctl restart docker
+            # Run Docker commands
             docker pull victor140/vichotel:latest
             docker stop vichotel || true
             docker rm vichotel || true
