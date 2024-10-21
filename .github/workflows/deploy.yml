@@ -50,6 +50,8 @@ jobs:
               sudo apt-get install -y docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
+              # Add Docker to PATH
+              export PATH=$PATH:/usr/bin/docker
             fi
             docker pull victor140/vichotel:latest
             docker stop vichotel || true
