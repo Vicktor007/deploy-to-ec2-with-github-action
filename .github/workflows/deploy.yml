@@ -43,15 +43,20 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            # Install Docker if not installed
-            if ! command -v docker &> /dev/null
-            then
+            # Determine the package manager and install Docker
+            if [ -x "$(command -v apt-get)" ]; then
               sudo apt-get update
               sudo apt-get install -y docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
-              # Add Docker to PATH
-              export PATH=$PATH:/usr/bin/docker
+            elif [ -x "$(command -v yum)" ]; then
+              sudo yum update -y
+              sudo yum install -y docker
+              sudo service docker start
+              sudo chkconfig docker on
+            else
+              echo "Unsupported package manager. Please install Docker manually."
+              exit 1
             fi
             docker pull victor140/vichotel:latest
             docker stop vichotel || true
