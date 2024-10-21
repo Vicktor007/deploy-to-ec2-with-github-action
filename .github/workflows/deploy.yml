@@ -62,11 +62,11 @@ jobs:
             sudo usermod -aG docker $USER
             # Restart the Docker service
             sudo systemctl restart docker
-            # Run Docker commands
-            docker pull victor140/vichotel:latest
-            docker stop vichotel || true
-            docker rm vichotel || true
-            docker run -d -p 8080:8080 --name vichotel \
+            # Run Docker commands with sudo
+            sudo docker pull victor140/vichotel:latest
+            sudo docker stop vichotel || true
+            sudo docker rm vichotel || true
+            sudo docker run -d -p 8080:8080 --name vichotel \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             -e DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
             -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
